@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_classic.agents import create_agent, AgentExecutor
+from langchain_classic.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.prompts import ChatPromptTemplate
 from tools import server_health_check, restart_service
 from knowledge_engine import get_sop_context
@@ -33,4 +33,5 @@ if st.button("🚀 Execute Fix"):
     # 3. Run the agentic loop
     response = executor.invoke({"input": log_input, "context": sop_context})
     st.success(f"### Resolution:\n{response['output']}")
+
 
