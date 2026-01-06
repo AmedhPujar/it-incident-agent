@@ -1,4 +1,5 @@
 langchain
+langchain_classic
 langchain-google-genai
 langchain-cohere
 langchain-community
