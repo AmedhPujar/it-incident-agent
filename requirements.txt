@@ -1,8 +1,7 @@
 langchain
-langchain_classic
-langchain-community
 langchain-google-genai
+langchain-cohere
+langchain-community
 streamlit
 python-dotenv
 faiss-cpu
-docx2txt
