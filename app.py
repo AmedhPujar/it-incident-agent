@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.agents import create_tool_calling_agent, AgentExecutor
+from langchain_classic.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.prompts import ChatPromptTemplate
 from tools import server_health_check, restart_service
 from knowledge_engine import get_sop_context
@@ -38,3 +38,4 @@ if st.button("Resolve Incident"):
         "context": sop_section
     })
     st.success(response["output"])
+
