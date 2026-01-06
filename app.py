@@ -27,11 +27,12 @@ if st.button("🚀 Execute Fix"):
     ])
     
     # Modern create_agent for LangChain v1.0
-    agent = create_agent(model=llm, tools=tools, prompt=prompt)
+    agent = create_tool_calling_agent(model=llm, tools=tools, prompt=prompt)
     executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
     
     # 3. Run the agentic loop
     response = executor.invoke({"input": log_input, "context": sop_context})
     st.success(f"### Resolution:\n{response['output']}")
+
 
 
