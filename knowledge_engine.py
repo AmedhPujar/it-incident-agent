@@ -1,4 +1,5 @@
 import os
+import time
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -17,8 +18,17 @@ def get_sop_context(query):
     
     # 3. Create searchable index
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    vectorstore = FAISS.from_documents(docs, embeddings)
+    batch_size=10
+    vectorstore = None
     
-    # 4. Search and return top context
-    relevant_docs = vectorstore.similarity_search(query, k=2)
-    return "\n".join([d.page_content for d in relevant_docs])
+    for i in range(0, len(docs), batch_size):
+        batch = docs[i : i + batch_size]
+        if vectorstore is None:
+            vectorstore = FAISS.from_documents(batch, embeddings)
+        else:
+            vectorstore.add_documents(batch)
+        
+        # Wait 5 seconds between batches to avoid the 429 error
+        time.sleep(5) 
+    
+    return "\n".join([d.page_content for d in vectorstore.similarity_search(query, k=2)])
