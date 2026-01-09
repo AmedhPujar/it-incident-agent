@@ -18,7 +18,7 @@ if st.button("🚀 Execute Fix"):
     sop_context = get_sop_context(log_input)
     
     # 2. Setup Agent Brain (via Gemini)
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
     tools = [server_health_check, restart_service]
     prompt = ChatPromptTemplate.from_messages([
         ("system", "You are an SRE. Use this SOP to fix the issue: {context}"),
@@ -33,6 +33,7 @@ if st.button("🚀 Execute Fix"):
     # 3. Run the agentic loop
     response = executor.invoke({"input": log_input, "context": sop_context})
     st.success(f"### Resolution:\n{response['output']}")
+
 
 
 
